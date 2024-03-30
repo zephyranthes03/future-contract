@@ -1,0 +1,9 @@
+/* components/TradingCard.module.css */
+
+.cardContainer {
+    border: 1px solid #ccc; /* Example border - adjust as necessary */
+    border-radius: 16px; /* Adjust your border-radius as desired */
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a subtle shadow */
+    /* Other styles for your card */
+  }
