@@ -6,7 +6,7 @@ import "./Interfaces.sol";
 
 
 /**
- * @author 0mllwntrmt3
+ * @author 0mllwntrmt3 >>> fork >>> han
  * @title ETH Liquidity Pool
  * @notice Accumulates liquidity in ETH from LPs and distributes P&L in ETH
  */

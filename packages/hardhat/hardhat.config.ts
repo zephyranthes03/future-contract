@@ -9,6 +9,8 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
+// import "@chainlink/hardhat-chainlink";
+import "@chainlink/hardhat-chainlink";
 
 // If not set, it uses ours Alchemy's default API key.
 // You can get your own at https://dashboard.alchemyapi.io
@@ -20,6 +22,9 @@ const deployerPrivateKey =
 const etherscanApiKey = process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
 const config: HardhatUserConfig = {
+  chainlink: {
+    // confirmations // Number of confirmations to wait for transactions, default: 1
+  },
   solidity: {
     version: "0.8.17",
     settings: {

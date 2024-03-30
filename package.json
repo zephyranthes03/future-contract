@@ -12,6 +12,7 @@
     "chain": "yarn workspace @se-2/hardhat chain",
     "compile": "yarn workspace @se-2/hardhat compile",
     "deploy": "yarn workspace @se-2/hardhat deploy",
+    "feed": "yarn workspace @se-2/hardhat read-price-feed --contract 0x0ef1181768A99E522FB5535fA2e0D172B36d3479",
     "flatten": "yarn workspace @se-2/hardhat flatten",
     "fork": "yarn workspace @se-2/hardhat fork",
     "format": "yarn next:format && yarn hardhat:format",
@@ -38,6 +39,8 @@
     "usehooks-ts@^2.7.2": "patch:usehooks-ts@npm:^2.7.2#./.yarn/patches/usehooks-ts-npm-2.7.2-fceffe0e43.patch"
   },
   "devDependencies": {
+    "@chainlink/hardhat-chainlink": "^0.0.4",
+    "hardhat-deploy": "^0.12.2",
     "husky": "~8.0.3",
     "lint-staged": "~13.2.2",
     "next": "~14.0.4",
