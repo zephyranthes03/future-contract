@@ -2,28 +2,9 @@
 "use client";
 
 import { useState } from "react";
-// import { useAccount } from "wagmi";
 import type { NextPage } from "next";
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
-
-// components/TradingCard.tsx
+import { useAccount, useConnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 // components/TradingCard.tsx
 
@@ -51,6 +32,7 @@ const TradingCard: NextPage = () => {
   const [ethAmount, setEthAmount] = useState("0.0");
   const [percentage, setPercentage] = useState("50.0");
   const [longShort, setLongShort] = useState("Long");
+  const [period, setPeriod] = useState("7");
 
   const [selectedCurrency, setSelectedCurrency] = useState("ETH");
   const [outputAmount, setOutputAmount] = useState("0.0");
@@ -60,6 +42,15 @@ const TradingCard: NextPage = () => {
 
   const [selectedLongShortButton, setSelectedLongShortButton] = useState("Long");
   const [selectedPercentageButton, setSelectedPercentageButton] = useState("50.0");
+  const [selectedPeriodButton, setSelectedPeriodButton] = useState("7");
+
+  const { connect, connectors } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const accountData = useAccount();
+
+  // 지갑이 연결되어 있는지 확인
+  const isConnected = Boolean(accountData?.address);
 
   // useEffect(() => {
   //   async function fetchEthPrice() {
@@ -91,13 +82,23 @@ const TradingCard: NextPage = () => {
     // Add logic for calculation here
     console.log(`Adjusting by ${percentage}%`);
     setPercentage(percentage);
+    setSelectedPercentageButton(percentage);
     calculateAmount();
   };
 
   const handleLongShortClick = (type: string) => {
     // Add logic for calculation here
-    console.log(`Set ${type}%`);
+    console.log(`Set Long/Short ${type}%`);
     setLongShort(type);
+    setSelectedLongShortButton(type);
+    calculateAmount();
+  };
+
+  const handlePeriodClick = (period: string) => {
+    // Add logic for calculation here
+    console.log(`Set period ${period}%`);
+    setPeriod(period);
+    setSelectedPeriodButton(period);
     calculateAmount();
   };
 
@@ -111,12 +112,14 @@ const TradingCard: NextPage = () => {
   const calculateAmount = () => {
     const loadedPercentage = parseFloat(percentage);
     const loadedAmount = parseFloat(ethAmount);
+    const loadedPeriod = parseFloat(period);
+
     if (longShort == "Long") {
-      const value = loadedAmount * ((100.0 + loadedPercentage) / 100.0);
+      const value = loadedAmount * ((100.0 + loadedPercentage * (loadedPeriod / 365.0)) / 100.0);
       console.log(value.toString());
       setOutputAmount(value.toString());
     } else {
-      const value = loadedAmount * ((100.0 - loadedPercentage) / 100.0);
+      const value = loadedAmount * ((100.0 - loadedPercentage * (loadedPeriod / 365.0)) / 100.0);
       console.log(value.toString());
       setOutputAmount(value.toString());
     }
@@ -127,12 +130,14 @@ const TradingCard: NextPage = () => {
 
   const isLongShortSelected = (buttonType: string) => {
     return selectedLongShortButton === buttonType ? "bg-blue-700" : "bg-blue-500";
-    setSelectedLongShortButton(buttonType);
   };
 
   const isPercentageSelected = (buttonType: string) => {
     return selectedPercentageButton === buttonType ? "bg-blue-700" : "bg-blue-500";
-    setSelectedPercentageButton(buttonType);
+  };
+
+  const isPeriodSelected = (buttonType: string) => {
+    return selectedPeriodButton === buttonType ? "bg-blue-700" : "bg-blue-500";
   };
 
   return (
@@ -217,6 +222,44 @@ const TradingCard: NextPage = () => {
         {/* Add more buttons for each percentage */}
       </div>
       <br />
+
+      <div className="options-section grid grid-cols-4 gap-4">
+        <button
+          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+            "30",
+          )}`}
+          onClick={() => handlePeriodClick("30")}
+        >
+          1 Month
+        </button>
+        <button
+          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+            "60",
+          )}`}
+          onClick={() => handlePeriodClick("60")}
+        >
+          2 Months
+        </button>
+        <button
+          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+            "90",
+          )}`}
+          onClick={() => handlePeriodClick("90")}
+        >
+          3 Months
+        </button>
+        <button
+          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+            "180",
+          )}`}
+          onClick={() => handlePeriodClick("180")}
+        >
+          6 Months
+        </button>
+        {/* Add more buttons for each percentage */}
+      </div>
+
+      <br />
       <div className="output-section">
         <div className="w-full bg-gray-300 text-white py-2 rounded grid grid-cols-4 gap-4">
           <span className="bg-gray-300 col-span-3 text-gray-700 text-center font-lg font-bold">
@@ -235,15 +278,23 @@ const TradingCard: NextPage = () => {
         </div>
       </div>
       <br />
+
       <div className="benefit-section">
-        <button className="w-full bg-gray-400 text-white py-2 rounded" onClick={handleConnectWallet}>
-          Benefit
-        </button>
+        {isConnected ? (
+          // 지갑이 연결되어 있으면 Benefit 버튼을 보여줍니다.
+          <button className="w-full bg-gray-400 text-white py-2 rounded" onClick={handleConnectWallet}>
+            Benefit
+          </button>
+        ) : (
+          // 지갑이 연결되어 있지 않으면 Disconnect 버튼을 보여줍니다.
+          <button
+            className="w-full bg-orange-500 text-white py-2 rounded"
+            onClick={() => connect({ connector: connectors[0] })}
+          >
+            Connect wallet
+          </button>
+        )}
       </div>
-      <br />
-      <button className="w-full bg-orange-500 text-white py-2 rounded" onClick={handleConnectWallet}>
-        Connect wallet
-      </button>
     </div>
   );
 };
