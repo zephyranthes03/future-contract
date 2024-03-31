@@ -16,3 +16,4 @@ node_modules
 .vercel
 package-lock.json
 yarn.lock
+packages/nextjs/.env
