@@ -15,8 +15,14 @@ const Contract: NextPage = () => {
         <div className="px-5">
           <h1 className="text-center">
             <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
+            <span className="block text-4xl font-bold">Future-Contract</span>
           </h1>
+          <p className="text-center text-lg">
+            Project Github{" "}
+            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
+              https://github.com/zephyranthes03/future-contract
+            </code>
+          </p>
           <div className="flex justify-center items-center space-x-2">
             <p className="my-2 font-medium">Connected Address:</p>
             <Address address={connectedAddress} />
