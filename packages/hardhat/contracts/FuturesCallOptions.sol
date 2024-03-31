@@ -2,7 +2,7 @@
 
  pragma solidity 0.8.17;
 //  import "@openzeppelin/contracts/utils/math/SafeMath.sol";
- import "./FutureOptions.sol";
+ import "./FuturesOptions.sol";
 
 /**
 Chain link price feed link
@@ -14,18 +14,18 @@ https://docs.chain.link/data-feeds/price-feeds/addresses?network=ethereum&page=1
  * @title ETH Call Options
  * @notice ETH Call Options Contract
  */
-contract FutureCallOptions is FutureOptions {
+contract FuturesCallOptions is FuturesOptions {
     using SafeMath for uint256;
-    FutureETHPool public pool;
+    FuturesETHPool public pool;
 
     /**
      * @param _priceProvider The address of ChainLink ETH/USD price feed contract
      */
     constructor(AggregatorInterface _priceProvider) 
         public
-        FutureOptions(_priceProvider, OptionType.Call)
+        FuturesOptions(_priceProvider, OptionType.Call)
     {
-        pool = new FutureETHPool();
+        pool = new FuturesETHPool();
     }
 
     /**
@@ -65,6 +65,7 @@ contract FutureCallOptions is FutureOptions {
     /**
      * @notice Sends profits in ETH from the ETH pool to a call option holder's address
      * @param option A specific option contract
+     //(현재가격 - 청산가)*계약수/현재가격 = 수익
      */
     function payProfit(Option memory option)
         internal
@@ -76,7 +77,26 @@ contract FutureCallOptions is FutureOptions {
         profit = currentPrice.sub(option.strike).mul(option.amount).div(currentPrice);
         pool.send(option.holder, profit);
         unlockFunds(option);
+        
     }
+     /***
+     get strike from profit percent
+     청산가 = ([(현재가격 *1.1)*현재가격)/계약수 - 현재가격 *-1
+      */
+      function getStrikeFromProfit(Option memory option, uint percent)
+      public
+      override
+       returns(uint strike)
+      {
+        uint currentPrice = uint(priceProvider.latestAnswer());
+        require(option.strike <= currentPrice, "Current price is too low");
+        require(percent >= 1, "Current price is too low");
+        require(percent >= 2, "percentis too high");
+        
+        strike =(currentPrice*percent).mul(currentPrice).div(option.amount).sub(currentPrice).mul(type(uint).max);
+      }
+
+
 
     /**
      * @notice Unlocks the amount that was locked in a call option contract

@@ -2,8 +2,8 @@
 
  pragma solidity 0.8.17;
  import "./Interfaces.sol";
- import "./FutureOptions.sol";
- import "./FutureERCPool.sol";
+ import "./FuturesOptions.sol";
+ import "./FuturesERCPool.sol";
 
 
 /**
@@ -11,11 +11,11 @@
  * @title block.timestamp ETH Put Options
  * @notice ETH Put Options Contract
  */
-contract FuturePutOptions is FutureOptions {
+contract FuturesPutOptions is FuturesOptions {
     using SafeMath for uint256;
 
     IUniswapV2Router01 public uniswapRouter;
-    FutureERCPool public pool;
+    FuturesERCPool public pool;
     uint256 public maxSpread = 95;
     IERC20 internal token;
 
@@ -30,11 +30,11 @@ contract FuturePutOptions is FutureOptions {
         IUniswapV2Router01 _uniswapRouter
     )
         public
-        FutureOptions(_priceProvider, OptionType.Put)
+        FuturesOptions(_priceProvider, OptionType.Put)
     {
         token = _token;
         uniswapRouter = _uniswapRouter;
-        pool = new FutureERCPool(token);
+        pool = new FuturesERCPool(token);
         approve();
     }
 
@@ -94,6 +94,9 @@ contract FuturePutOptions is FutureOptions {
         premium = amounts[amounts.length - 1];
         pool.sendPremium(premium);
     }
+
+
+
     /**
      * @notice Locks the amount required for an option
      * @param option A specific option contract
@@ -113,6 +116,24 @@ contract FuturePutOptions is FutureOptions {
         pool.send(option.holder, profit);
         unlockFunds(option);
     }
+
+    /***
+     get strike from profit percent
+     청산가 = ([(현재가격 *1.1)*현재가격)/계약수 - 현재가격 *-1
+      */
+      function getStrikeFromProfit(Option memory option, uint percent)
+      public
+      override
+       returns(uint strike)
+      {
+        uint currentPrice = uint(priceProvider.latestAnswer());
+        require(option.strike <= currentPrice, "Current price is too low");
+        require(percent >= 1, "Current price is too low");
+        require(percent >= 2, "percentis too high");
+        
+        strike =(currentPrice*percent).mul(currentPrice).div(option.amount).sub(currentPrice).mul(type(uint).max);
+      }
+
 
     /**
      * @notice Unlocks the amount that was locked in a put option contract

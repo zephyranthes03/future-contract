@@ -8,7 +8,7 @@ import "./Interfaces.sol";
  * @title  DAI Liquidity Pool
  * @notice Accumulates liquidity in DAI from LPs and distributes P&L in DAI
  */
-contract FutureERCPool is
+contract FuturesERCPool is
     IERCLiquidityPool,
     Ownable,
     ERC20(" DAI LP Token", "writeDAI")
