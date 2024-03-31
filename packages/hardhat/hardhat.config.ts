@@ -9,7 +9,6 @@ import "solidity-coverage";
 import "@nomicfoundation/hardhat-verify";
 import "hardhat-deploy";
 import "hardhat-deploy-ethers";
-// import "@chainlink/hardhat-chainlink";
 import "@chainlink/hardhat-chainlink";
 
 // If not set, it uses ours Alchemy's default API key.

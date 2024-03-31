@@ -26,6 +26,26 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 
 // components/TradingCard.tsx
 
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
+// components/TradingCard.tsx
+
 const TradingCard: NextPage = () => {
   // const { address: connectedAddress } = useAccount();
 
@@ -42,7 +62,7 @@ const TradingCard: NextPage = () => {
 
   const [selectedLongShortButton, setSelectedLongShortButton] = useState("Long");
   const [selectedPercentageButton, setSelectedPercentageButton] = useState("50.0");
-  const [selectedPeriodButton, setSelectedPeriodButton] = useState("7");
+  const [selectedPeriodButton, setSelectedPeriodButton] = useState("30");
 
   const { connect, connectors } = useConnect({
     connector: new InjectedConnector(),
@@ -129,15 +149,15 @@ const TradingCard: NextPage = () => {
   };
 
   const isLongShortSelected = (buttonType: string) => {
-    return selectedLongShortButton === buttonType ? "bg-blue-700" : "bg-blue-500";
+    return selectedLongShortButton === buttonType ? "bg-red-600" : "bg-red-400";
   };
 
   const isPercentageSelected = (buttonType: string) => {
-    return selectedPercentageButton === buttonType ? "bg-blue-700" : "bg-blue-500";
+    return selectedPercentageButton === buttonType ? "bg-red-600" : "bg-red-400";
   };
 
   const isPeriodSelected = (buttonType: string) => {
-    return selectedPeriodButton === buttonType ? "bg-blue-700" : "bg-blue-500";
+    return selectedPeriodButton === buttonType ? "bg-red-600" : "bg-red-400";
   };
 
   return (
@@ -160,7 +180,7 @@ const TradingCard: NextPage = () => {
         <br />
         <div className="types-section grid grid-cols-2 gap-4">
           <button
-            className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isLongShortSelected(
+            className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isLongShortSelected(
               "Long",
             )}`}
             onClick={() => handleLongShortClick("Long")}
@@ -168,7 +188,7 @@ const TradingCard: NextPage = () => {
             Long
           </button>
           <button
-            className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isLongShortSelected(
+            className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isLongShortSelected(
               "Short",
             )}`}
             onClick={() => handleLongShortClick("Short")}
@@ -180,7 +200,7 @@ const TradingCard: NextPage = () => {
       <br />
       <div className="options-section grid grid-cols-5 gap-4">
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPercentageSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPercentageSelected(
             "50.0",
           )}`}
           onClick={() => handlePercentageClick("50.0")}
@@ -188,7 +208,7 @@ const TradingCard: NextPage = () => {
           +50%
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPercentageSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPercentageSelected(
             "40.0",
           )}`}
           onClick={() => handlePercentageClick("40.0")}
@@ -196,7 +216,7 @@ const TradingCard: NextPage = () => {
           +40%
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPercentageSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPercentageSelected(
             "30.0",
           )}`}
           onClick={() => handlePercentageClick("30.0")}
@@ -204,7 +224,7 @@ const TradingCard: NextPage = () => {
           +30%
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPercentageSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPercentageSelected(
             "20.0",
           )}`}
           onClick={() => handlePercentageClick("20.0")}
@@ -212,7 +232,7 @@ const TradingCard: NextPage = () => {
           +20%
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPercentageSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPercentageSelected(
             "10.0",
           )}`}
           onClick={() => handlePercentageClick("10.0")}
@@ -225,7 +245,7 @@ const TradingCard: NextPage = () => {
 
       <div className="options-section grid grid-cols-4 gap-4">
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPeriodSelected(
             "30",
           )}`}
           onClick={() => handlePeriodClick("30")}
@@ -233,7 +253,7 @@ const TradingCard: NextPage = () => {
           1 Month
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPeriodSelected(
             "60",
           )}`}
           onClick={() => handlePeriodClick("60")}
@@ -241,7 +261,7 @@ const TradingCard: NextPage = () => {
           2 Months
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPeriodSelected(
             "90",
           )}`}
           onClick={() => handlePeriodClick("90")}
@@ -249,7 +269,7 @@ const TradingCard: NextPage = () => {
           3 Months
         </button>
         <button
-          className={`text-white font-bold py-2 px-4 border border-blue-700 hover:bg-blue-700 ${isPeriodSelected(
+          className={`text-white font-bold py-2 px-4 border border-white-700 hover:bg-white-700 ${isPeriodSelected(
             "180",
           )}`}
           onClick={() => handlePeriodClick("180")}
@@ -282,7 +302,7 @@ const TradingCard: NextPage = () => {
       <div className="benefit-section">
         {isConnected ? (
           // 지갑이 연결되어 있으면 Benefit 버튼을 보여줍니다.
-          <button className="w-full bg-gray-400 text-white py-2 rounded" onClick={handleConnectWallet}>
+          <button className="w-full bg-gray-900 text-white py-2 rounded" onClick={handleConnectWallet}>
             Benefit
           </button>
         ) : (
