@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: MIT
 
- pragma solidity 0.8.17;
+pragma solidity 0.8.17;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./Interfaces.sol";
 
@@ -10,7 +10,7 @@ import "./Interfaces.sol";
  * @title ETH Liquidity Pool
  * @notice Accumulates liquidity in ETH from LPs and distributes P&L in ETH
  */
-contract FutureETHPool is
+contract FuturesETHPool is
     IETHLiquidityPool,
     Ownable,
     ERC20("ETH LP Token", "writeETH")
@@ -22,7 +22,8 @@ contract FutureETHPool is
     mapping(address => uint256) private lastProvideTimestamp;
 
     /*
-     * @nonce Sends premiums to the liquidity pool
+     * @nonce Se
+     nds premiums to the liquidity pool
      **/
     receive() external payable {}
 

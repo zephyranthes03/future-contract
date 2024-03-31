@@ -2,8 +2,8 @@
 
  pragma solidity 0.8.17;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./FutureERCPool.sol";
-import "./FutureETHPool.sol";
+import "./FuturesERCPool.sol";
+import "./FuturesETHPool.sol";
 
 
 /**
@@ -12,7 +12,7 @@ import "./FutureETHPool.sol";
  * @notice  Protocol Options Contract
  */
 abstract
-contract FutureOptions is Ownable {
+contract FuturesOptions is Ownable {
     using SafeMath for uint256;
 
     address payable public settlementFeeRecipient;
@@ -267,7 +267,12 @@ contract FutureOptions is Ownable {
         internal
         virtual
         returns (uint256 amount);
-
+     
+     function getStrikeFromProfit(Option memory option, uint percent)
+     public
+      virtual 
+      returns (uint strike);
+    
     function lockFunds(Option memory option) internal virtual;
     function unlockFunds(Option memory option) internal virtual;
 

@@ -1,5 +1,6 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
+// import { contracts } from "../typechain-types/factories/@chainlink";
 // import { Contract } from "ethers";
 
 /**
@@ -21,8 +22,6 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   */
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
-
-  // const _sepolia_ETHUSD  = 0x694AA1769357215DE4FAC081bf1f309aDC325306;
 
   const StableCoin = await deploy("FakeUSD", {
     from: deployer,
@@ -52,7 +51,7 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  await deploy("FuturePutOptions", {
+  await deploy("FuturesPutOptions", {
     from: deployer,
     // Contract constructor arguments
     args: [StableCoin.address, PriceProvider.address, Exchange.address],
@@ -60,17 +59,20 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
     autoMine: true,
   });
 
-  await deploy("FutureCallOptions", {
+  // chainlink price feed
+  const _sepolia_ETHUSD = "0x694AA1769357215DE4FAC081bf1f309aDC325306";
+  await deploy("FuturesCallOptions", {
     from: deployer,
     // Contract constructor arguments
-    args: [PriceProvider.address],
+    args: [_sepolia_ETHUSD],
+    // args: [PriceProvider.address],
     log: true,
     autoMine: true,
   });
 
   // Get the deployed contract to interact with it after deploying.
-  // const FutureCallOption = await hre.ethers.getContract<Contract>("FutureCallOptions", deployer);
-  // console.log("availableBalance:", await FutureCallOption.availableBalance());
+  // const FuturesCallOption = await hre.ethers.getContract<Contract>("FuturesCallOptions", deployer);
+  // console.log("availableBalance:", await FuturesCallOption.availableBalance());
 
   // const ethSeoulToken = await hre.ethers.getContract<Contract>("ethSeoulToken", deployer);
   // console.log("ethSeoulToken totalSupply:", await ethSeoulToken.totalSupply());
@@ -80,4 +82,4 @@ export default deployYourContract;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["FutureCallOption"];
+deployYourContract.tags = ["FuturesCallOption"];
