@@ -17,7 +17,7 @@ contract FutureOptions is Ownable {
 
     address payable public settlementFeeRecipient;
     Option[] public options;
-    uint256 public impliedVolRate;
+    uint256 public impliedVolRate; //내제가격 (약세장에서 증가, 강세장에서 하학)
     uint256 internal constant PRICE_DECIMALS = 1e8;
     uint256 internal contractCreationTimestamp;
     AggregatorInterface public priceProvider;
@@ -57,7 +57,7 @@ contract FutureOptions is Ownable {
     }
 
     /**
-     * @notice Used for adjusting the options prices while balancing asset's implied volatility rate
+     * @notice Used for adjusting the options prices while balancing asset's ㄴㅅ volatility rate
      * @param value New IVRate value
      */
     function setImpliedVolRate(uint256 value) external onlyOwner {
@@ -78,7 +78,7 @@ contract FutureOptions is Ownable {
      * @notice Creates a new option
      * @param period Option period in seconds (1 days <= period <= 4 weeks)
      * @param amount Option amount
-     * @param strike Strike price of the option
+     * @param strike Strike price of the option (행사가격)
      * @return optionID Created option's ID
      */
     function create(

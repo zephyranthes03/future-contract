@@ -2,7 +2,7 @@
 
  pragma solidity 0.8.17;
  import "./Interfaces.sol";
- import "./FutureOption.sol";
+ import "./FutureOptions.sol";
  import "./FutureERCPool.sol";
 
 
@@ -94,7 +94,6 @@ contract FuturePutOptions is FutureOptions {
         premium = amounts[amounts.length - 1];
         pool.sendPremium(premium);
     }
-
     /**
      * @notice Locks the amount required for an option
      * @param option A specific option contract
